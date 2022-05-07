@@ -38,10 +38,8 @@ for  way in ways:
        if keepFirst==false:
          back_index= number_to_index[node]
          keepFirst=true
-   i+=1     
-
 cont=0
-with open("adsList","a") as file:  
+with open("AdsList","a") as file:  
     for  lista in  ListAds:
       file.write(f"{cont}:{str(lista)} \n")
       cont+=1
