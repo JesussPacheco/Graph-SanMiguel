@@ -1,49 +1,49 @@
 from hashlib import new
 from regex import F
 from sqlalchemy import false, true
+#Function convert text to list
 def tex_to_list(text_nodes):
     nodes=text_nodes.split(',')
     return nodes
+#Declarate numbers of nodes  and fill empty
 ListAds=[]
-for i in range(7500):
+for i in range(7096):
     ListAds.append([])
-        
+# read ways and connect with his nodes        
 ways={}
-with open("ways.txt") as f_obj:  
+with open("waysWithNodes.txt") as f_obj:  
     for line in f_obj:
         k,v_text=line.strip().split('.')
         v=tex_to_list(v_text)
         ways[k.strip()]=v
- #diccionario de nodos       
-new_id={}
+#diccionario de nodos       
 number_to_index={}
+index_to_number={}
 with open("nodes.txt") as f_obj:  
     index=0
     for line in f_obj:
-        new_id[line.strip()]=index
-        number_to_index[index]=line.strip()
+        number_to_index[line.strip()]=index
+        index_to_number[index]=line.strip()
         index+=1
+
+#Create Nodes    
 for  way in ways:
    keepFirst=false
    for node in ways[way]:
-       current_index= new_id[node]
+       current_index= number_to_index[node]
        if keepFirst==true:
            ListAds[current_index].append(back_index)
            ListAds[back_index].append(current_index)
            back_index=current_index
        if keepFirst==false:
-         back_index= new_id[node]
+         back_index= number_to_index[node]
          keepFirst=true
-   i+=1    
+   i+=1     
 
-
-            
-for  lista in  ListAds:
-    for i in lista:
-       print(f"{number_to_index[i]}") 
-    print("------------------------------------")       
-
-
+cont=0
+with open("adsList","a") as file:  
+    for  lista in  ListAds:
+      file.write(f"{cont}:{str(lista)} \n")
+      cont+=1
     
-
 print("finish")        
